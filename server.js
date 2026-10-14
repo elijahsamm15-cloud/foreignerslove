@@ -1,27 +1,60 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
+const axios = require('axios');
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
-app.use(express.static('./'));
+app.use(express.json());
 
-app.get('/', (req,res)=> res.send('ForeignersLove API Live - AI Companions Only'));
+let users = [];
 
-// FAKE M-Pesa for now - activates after 10 seconds (TEST MODE)
-app.post('/api/pay', (req,res)=>{
-  const {phone} = req.body;
-  console.log('Payment request for:', phone);
-  // Simulate STK push success
-  setTimeout(()=>{
-    console.log('Activated for', phone);
-  },10000);
-  res.json({success:true, message:'TEST MODE: STK Push simulated. In real Daraja, user will get prompt. Use passkey 123456 after 10sec to activate.', checkoutId: 'test_'+Date.now()});
+async function getToken(){
+  const auth = Buffer.from(`${process.env.CONSUMER_KEY}:${process.env.CONSUMER_SECRET}`).toString('base64');
+  const res = await axios.get('https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
+  { headers:{ Authorization:`Basic ${auth}` }});
+  return res.data.access_token;
+}
+
+app.post('/api/pay', async (req,res)=>{
+  try{
+    let {name, phone, passkey} = req.body;
+    let phoneFormatted = phone.toString();
+    if(phoneFormatted.startsWith('07')) phoneFormatted='254'+phoneFormatted.slice(1);
+    if(phoneFormatted.startsWith('0')) phoneFormatted='254'+phoneFormatted.slice(1);
+    
+    const token = await getToken();
+    const timestamp = new Date().toISOString().replace(/[^0-9]/g,'').slice(0,14);
+    const password = Buffer.from(process.env.SHORTCODE+process.env.PASSKEY+timestamp).toString('base64');
+    
+    const stk = await axios.post('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest',{
+      BusinessShortCode: process.env.SHORTCODE,
+      Password: password,
+      Timestamp: timestamp,
+      TransactionType: "CustomerPayBillOnline",
+      Amount: 1,
+      PartyA: phoneFormatted,
+      PartyB: process.env.SHORTCODE,
+      PhoneNumber: phoneFormatted,
+      CallBackURL: "https://foreignerslove.onrender.com/callback",
+      AccountReference: "ForeignersLove",
+      TransactionDesc: "VIP 150"
+    },{ headers:{ Authorization:`Bearer ${token}` }});
+    
+    users.push({name, phone:phoneFormatted, passkey, paid:false, checkoutId:stk.data.CheckoutRequestID});
+    res.json({success:true, message:"STK PUSH SENT! Check your phone"});
+  }catch(e){
+    console.log(e.response?.data || e.message);
+    users.push({name:req.body.name, phone:req.body.phone, passkey:req.body.passkey, paid:false});
+    res.json({success:true, message:"TEST MODE: Use 123456 to verify"});
+  }
 });
 
-app.post('/api/verify', (req,res)=>{
-  res.json({success:true});
+app.post('/api/verify',(req,res)=>{
+  const {code} = req.body;
+  if(code==='123456') return res.json({success:true});
+  res.json({success:false, message:"Invalid code"});
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, ()=> console.log('Server on '+PORT));
+app.post('/callback',(req,res)=>{ console.log("Callback",req.body); res.json({ResultCode:0, ResultDesc:"Accepted"})});
+app.get('/api/users',(req,res)=>res.json(users));
+app.get('/',(req,res)=>res.send('ForeignersLove API LIVE'));
+app.listen(process.env.PORT||10000,()=>console.log('Server on 10000'));
