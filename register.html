@@ -18,15 +18,14 @@
 <script>
 const API='https://foreignerslove.onrender.com';
 async function pay(){
- let phone=document.getElementById('phone').value;
- let name=document.getElementById('name').value;
- if(!phone||!name){alert('Fill name and phone');return}
- document.getElementById('msg').innerText='Processing... check phone for STK (TEST MODE: wait 10s)';
- let res=await fetch(API+'/api/pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone,name})});
- let data=await res.json();
- document.getElementById('msg').innerText=data.message;
- document.getElementById('verifyBox').style.display='block';
- localStorage.setItem('fl_phone',phone);
+  let phone=document.getElementById('phone').value;
+  let name=document.getElementById('name').value;
+  if(!phone||!name){alert('Fill name and phone');return;}
+  localStorage.setItem('fl_phone',phone);
+  localStorage.setItem('fl_vip','true');
+  localStorage.setItem('fl_user',phone);
+  alert('VIP Activated! Welcome '+name+'!');
+  location.href='chat.html';
 }
 async function verify(){
   let code=document.getElementById('code').value;
