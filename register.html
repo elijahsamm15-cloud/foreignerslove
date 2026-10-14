@@ -1,0 +1,12 @@
+// Real callback - only activates if 150 paid
+app.post("/callback", (req,res)=>{
+  if(req.body.Body.stkCallback.ResultCode === 0){
+    let phone = req.body.Body.stkCallback.CallbackMetadata.Item[4].Value;
+    let amount = req.body.Body.stkCallback.CallbackMetadata.Item[0].Value;
+    if(amount >= 150){
+      // activate user in database
+      db.users.update({phone: phone}, {$set:{is_paid:true, vip_until: Date.now()+30*24*3600*1000}})
+    }
+  }
+  res.json({ResultCode:0});
+});
