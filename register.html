@@ -1,37 +1,41 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>Register</title>
-<style>body{font-family:Arial;background:#fff5f8;margin:0;padding:20px} .box{max-width:400px;margin:30px auto;background:white;padding:20px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)} input{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box} button{width:100%;padding:14px;background:#ff4d8d;color:white;border:0;border-radius:8px;font-weight:bold;cursor:pointer} .disclaimer{font-size:11px;color:#666;text-align:center;margin-bottom:15px}</style>
-</head><body>
+<html>
+<head>
+<title>Activate VIP - ForeignersLove</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:Arial;background:#fff0f5;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}
+.box{background:white;padding:30px;border-radius:15px;box-shadow:0 4px 15px rgba(0,0,0,0.1);width:90%;max-width:350px;text-align:center}
+input{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
+button{width:100%;padding:13px;background:#ff4081;color:white;border:none;border-radius:8px;font-weight:bold;cursor:pointer;font-size:16px}
+button:active{transform:scale(0.98)}
+.small{font-size:11px;color:#888;margin-bottom:10px}
+</style>
+</head>
+<body>
 <div class="box">
-<div class="disclaimer">⚠️ All profiles are AI-powered companions - Not real persons.</div>
-<h2 style="text-align:center">Activate VIP - 150 KSH / 30 Days</h2>
-<input id="name" placeholder="Your Name">
-<input id="phone" placeholder="M-Pesa Phone 2547...">
-<input id="pass" placeholder="Create Passkey (remember it)">
+<p class="small">⚠️ All profiles are AI-powered companions - Not real persons</p>
+<h2>Activate VIP - 150 KSH / 30 Days</h2>
+<input id="name" placeholder="Your Name - Elijah Kilonzi Sammy" value="Elijah Kilonzi Sammy">
+<input id="phone" placeholder="Phone - 0706900843" value="0706900843">
+<input id="code" placeholder="Code - 123456" value="123456">
 <button onclick="pay()">Pay 150 KSH & Activate</button>
-<p id="msg" style="text-align:center;margin-top:15px"></p>
-<div id="verifyBox" style="display:none;margin-top:15px">
-<input id="code" placeholder="Enter passkey 123456 for TEST">
-<button onclick="verify()">Verify & Start Chatting</button>
-</div>
+<p style="font-size:12px;margin-top:10px">Test code: 123456</p>
 </div>
 <script>
-const API='https://foreignerslove.onrender.com';
-async function pay(){
-  let phone=document.getElementById('phone').value;
+function pay(){
   let name=document.getElementById('name').value;
-  if(!phone||!name){alert('Fill name and phone');return;}
+  let phone=document.getElementById('phone').value;
+  let code=document.getElementById('code').value;
+  if(!name||!phone){alert('Please fill name and phone');return;}
+  // Test mode - accept any code, no server needed
   localStorage.setItem('fl_phone',phone);
   localStorage.setItem('fl_vip','true');
   localStorage.setItem('fl_user',phone);
-  alert('VIP Activated! Welcome '+name+'!');
-  location.href='chat.html';
+  localStorage.setItem('fl_name',name);
+  alert('VIP Activated! Welcome '+name+'! Redirecting to chat...');
+  window.location.href='chat.html';
 }
-async function verify(){
-  let code=document.getElementById('code').value;
-  let phone=localStorage.getItem('fl_phone') || document.getElementById('phone').value;
-  localStorage.setItem('fl_vip','true');
-  localStorage.setItem('fl_user',phone);
-  alert('VIP Activated! Welcome!');
-  location.href='chat.html';
-}
+</script>
+</body>
+</html>
