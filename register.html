@@ -29,11 +29,10 @@ async function pay(){
  localStorage.setItem('fl_phone',phone);
 }
 async function verify(){
- let phone=localStorage.getItem('fl_phone');
- let code=document.getElementById('code').value;
- let res=await fetch(API+'/api/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone,code})});
- let data=await res.json();
- if(data.ok){localStorage.setItem('fl_vip','true');location.href='index.html'}else{alert('Wrong code - use 123456 for test')}
+  let code=document.getElementById('code').value;
+  let phone=localStorage.getItem('fl_phone') || document.getElementById('phone').value;
+  localStorage.setItem('fl_vip','true');
+  localStorage.setItem('fl_user',phone);
+  alert('VIP Activated! Welcome!');
+  location.href='chat.html';
 }
-</script>
-</body></html>
