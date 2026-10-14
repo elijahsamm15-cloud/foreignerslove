@@ -1,12 +1,39 @@
-// Real callback - only activates if 150 paid
-app.post("/callback", (req,res)=>{
-  if(req.body.Body.stkCallback.ResultCode === 0){
-    let phone = req.body.Body.stkCallback.CallbackMetadata.Item[4].Value;
-    let amount = req.body.Body.stkCallback.CallbackMetadata.Item[0].Value;
-    if(amount >= 150){
-      // activate user in database
-      db.users.update({phone: phone}, {$set:{is_paid:true, vip_until: Date.now()+30*24*3600*1000}})
-    }
-  }
-  res.json({ResultCode:0});
-});
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>Register</title>
+<style>body{font-family:Arial;background:#fff5f8;margin:0;padding:20px} .box{max-width:400px;margin:30px auto;background:white;padding:20px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)} input{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box} button{width:100%;padding:14px;background:#ff4d8d;color:white;border:0;border-radius:8px;font-weight:bold;cursor:pointer} .disclaimer{font-size:11px;color:#666;text-align:center;margin-bottom:15px}</style>
+</head><body>
+<div class="box">
+<div class="disclaimer">⚠️ All profiles are AI-powered companions - Not real persons.</div>
+<h2 style="text-align:center">Activate VIP - 150 KSH / 30 Days</h2>
+<input id="name" placeholder="Your Name">
+<input id="phone" placeholder="M-Pesa Phone 2547...">
+<input id="pass" placeholder="Create Passkey (remember it)">
+<button onclick="pay()">Pay 150 KSH & Activate</button>
+<p id="msg" style="text-align:center;margin-top:15px"></p>
+<div id="verifyBox" style="display:none;margin-top:15px">
+<input id="code" placeholder="Enter passkey 123456 for TEST">
+<button onclick="verify()">Verify & Start Chatting</button>
+</div>
+</div>
+<script>
+const API='https://foreignerslove.onrender.com';
+async function pay(){
+ let phone=document.getElementById('phone').value;
+ let name=document.getElementById('name').value;
+ if(!phone||!name){alert('Fill name and phone');return}
+ document.getElementById('msg').innerText='Processing... check phone for STK (TEST MODE: wait 10s)';
+ let res=await fetch(API+'/api/pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone,name})});
+ let data=await res.json();
+ document.getElementById('msg').innerText=data.message;
+ document.getElementById('verifyBox').style.display='block';
+ localStorage.setItem('fl_phone',phone);
+}
+async function verify(){
+ let phone=localStorage.getItem('fl_phone');
+ let code=document.getElementById('code').value;
+ let res=await fetch(API+'/api/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone,code})});
+ let data=await res.json();
+ if(data.ok){localStorage.setItem('fl_vip','true');location.href='index.html'}else{alert('Wrong code - use 123456 for test')}
+}
+</script>
+</body></html>
