@@ -1,30 +1,38 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>Foreigners Love</title>
-<style>body{font-family:Arial;background:#fff5f8;margin:0}header{background:white;padding:15px;display:flex;justify-content:space-between;box-shadow:0 2px 5px #ddd}.logo{color:#e9407a;font-weight:bold;font-size:22px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;padding:15px}.card{background:white;border-radius:12px;padding:12px;text-align:center;box-shadow:0 2px 8px #f0c2d0}.btn{background:#e9407a;color:white;border:none;padding:8px 12px;border-radius:20px;width:100%;margin-top:6px;cursor:pointer}.disclaimer{background:#fff3cd;padding:8px;text-align:center;font-size:12px}</style>
-</head><body>
-<div class="disclaimer">⚠️ All profiles are AI-powered companions - Not real persons. 150 KSH = 30 days VIP chat access.</div>
-<header><div class="logo">💖 Foreigners Love</div><div><a href="register.html">Register</a></div></header>
-<h2 style="text-align:center">Meet 20 AI Friends from Around the World</h2>
-<div class="grid">
-<div class="card">🇯🇵<br><b>Yuki</b><br><small>Japan</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇳🇬<br><b>Aisha</b><br><small>Nigeria</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇧🇷<br><b>Lucas</b><br><small>Brazil</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇫🇷<br><b>Chloe</b><br><small>France</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇮🇳<br><b>Priya</b><br><small>India</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇵🇭<br><b>Dylan</b><br><small>Philippines</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇰🇷<br><b>Minji</b><br><small>Korea</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇨🇦<br><b>Liam</b><br><small>Canada</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇮🇹<br><b>Sofia</b><br><small>Italy</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇲🇽<br><b>Mateo</b><br><small>Mexico</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇩🇪<br><b>Emma</b><br><small>Germany</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇸🇪<br><b>Linnea</b><br><small>Sweden</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇰🇪<br><b>Jabari</b><br><small>Kenya</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇦🇺<br><b>Oliver</b><br><small>Australia</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇵🇭<br><b>Aaliyah</b><br><small>Philippines</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇹🇷<br><b>Emre</b><br><small>Turkey</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇺🇸<br><b>Sara</b><br><small>USA</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇮🇩<br><b>Putri</b><br><small>Indonesia</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇦🇷<br><b>Camila</b><br><small>Argentina</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-<div class="card">🇬🇧<br><b>Grace</b><br><small>UK</small><button class="btn" onclick="location.href='register.html'">Chat Now</button></div>
-</div>
-</body></html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ForeignersLove - Find Love</title>
+<style>
+body{margin:0;font-family:Arial;background:#f0f2f5}
+.header{background:#075e54;color:white;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px;max-width:600px;margin:auto}
+.card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);position:relative;cursor:pointer}
+.card img{width:100%;height:180px;object-fit:cover}
+.card-info{padding:8px}
+.card-name{font-weight:bold;font-size:14px}
+.lock{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;flex-direction:column;color:white;font-weight:bold}
+.lock span{font-size:30px}
+.withdraw-box{background:white;margin:12px auto;max-width:600px;padding:15px;border-radius:12px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+.btn{background:#075e54;color:white;border:none;padding:10px 20px;border-radius:20px;font-weight:bold;cursor:pointer}
+.btn:disabled{background:#ccc}
+</style>
+</head>
+<body>
+<div class="header"><div><b id="userName">ForeignersLove</b><div id="userPhone" style="font-size:11px"></div></div><button onclick="logout()" style="background:white;color:#075e54;border:none;padding:6px 12px;border-radius:15px;font-size:12px;font-weight:bold">Logout</button></div>
+<div class="withdraw-box"><h3 style="margin:5px">💰 Your Earnings</h3><p style="margin:5px">Balance: <b>KSH <span id="bal">0</span></b></p><p style="font-size:12px;color:#666">Withdraw available after 10 days from login</p><p style="font-size:13px">Time left: <b id="countdown">Calculating...</b></p><button id="withdrawBtn" class="btn" disabled onclick="withdraw()">Withdraw Now</button><p id="withdrawMsg" style="font-size:12px"></p></div>
+<div class="grid" id="grid"></div>
+<script>
+const persons=[{name:"Aisha, 22",id:"aisha",img:"https://randomuser.me/api/portraits/women/1.jpg"},{name:"Sasha, 24",id:"sasha",img:"https://randomuser.me/api/portraits/women/2.jpg"},{name:"Keisha, 23",id:"keisha",img:"https://randomuser.me/api/portraits/women/3.jpg"},{name:"Muthoni, 21",id:"muthoni",img:"https://randomuser.me/api/portraits/women/4.jpg"},{name:"Zara, 25",id:"zara",img:"https://randomuser.me/api/portraits/women/5.jpg"},{name:"Njeri, 22",id:"njeri",img:"https://randomuser.me/api/portraits/women/6.jpg"},{name:"Wanjiku, 24",id:"wanjiku",img:"https://randomuser.me/api/portraits/women/7.jpg"},{name:"Akinyi, 23",id:"akinyi",img:"https://randomuser.me/api/portraits/women/8.jpg"},{name:"Amina, 21",id:"amina",img:"https://randomuser.me/api/portraits/women/9.jpg"},{name:"Chebet, 26",id:"chebet",img:"https://randomuser.me/api/portraits/women/10.jpg"},{name:"Atieno, 22",id:"atieno",img:"https://randomuser.me/api/portraits/women/11.jpg"},{name:"Kamene, 24",id:"kamene",img:"https://randomuser.me/api/portraits/women/12.jpg"},{name:"Syombua, 23",id:"syombua",img:"https://randomuser.me/api/portraits/women/13.jpg"},{name:"Mwende, 25",id:"mwende",img:"https://randomuser.me/api/portraits/women/14.jpg"},{name:"Nduta, 22",id:"nduta",img:"https://randomuser.me/api/portraits/women/15.jpg"},{name:"Kawira, 24",id:"kawira",img:"https://randomuser.me/api/portraits/women/16.jpg"},{name:"Naserian, 21",id:"naserian",img:"https://randomuser.me/api/portraits/women/17.jpg"},{name:"Awuor, 23",id:"awuor",img:"https://randomuser.me/api/portraits/women/18.jpg"},{name:"Mukami, 26",id:"mukami",img:"https://randomuser.me/api/portraits/women/19.jpg"},{name:"Wafula, 22",id:"wafula",img:"https://randomuser.me/api/portraits/women/20.jpg"}];
+let currentUser=localStorage.getItem('currentUserEmail');if(!currentUser){window.location.href='login.html';}
+let userData=JSON.parse(localStorage.getItem('user_'+currentUser)||'{}');document.getElementById('userName').innerText='Hi, '+(userData.name||'User');document.getElementById('userPhone').innerText=currentUser;
+let loginTime=parseInt(localStorage.getItem('loginTime_'+currentUser)||Date.now());let balance=parseInt(localStorage.getItem('balance_'+currentUser)||'0');document.getElementById('bal').innerText=balance;
+function render(){let grid=document.getElementById('grid');grid.innerHTML='';persons.forEach(p=>{let paid=localStorage.getItem('paid_'+currentUser+'_'+p.id)==='true';let div=document.createElement('div');div.className='card';div.innerHTML=`<img src="${p.img}"><div class="card-info"><div class="card-name">${p.name}</div><div class="card-age">Online now</div></div>${!paid?`<div class="lock"><span>🔒</span><div>Pay 150 to Unlock</div></div>`:''}`;div.onclick=()=>{window.location.href='chat.html?id='+p.id;};grid.appendChild(div);});}
+render();
+function updateCountdown(){let now=Date.now();let tenDays=10*24*60*60*1000;let unlockTime=loginTime+tenDays;let diff=unlockTime-now;let btn=document.getElementById('withdrawBtn');if(diff<=0){document.getElementById('countdown').innerText='Ready to withdraw!';btn.disabled=false;}else{let d=Math.floor(diff/(24*60*60*1000));let h=Math.floor((diff%(24*60*60*1000))/(60*60*1000));let m=Math.floor((diff%(60*60*1000))/(60*1000));document.getElementById('countdown').innerText=d+'d '+h+'h '+m+'m left';btn.disabled=true;}}
+setInterval(updateCountdown,1000);updateCountdown();
+function withdraw(){let bal=parseInt(localStorage.getItem('balance_'+currentUser)||'0');if(bal<100){document.getElementById('withdrawMsg').innerHTML="<span style='color:red'>Minimum withdraw 100 KSH</span>";return;}document.getElementById('withdrawMsg').innerHTML="<span style='color:green'>Withdraw request sent to "+currentUser+"! You will receive M-Pesa soon.</span>";localStorage.setItem('balance_'+currentUser,'0');document.getElementById('bal').innerText='0';}
+function logout(){localStorage.removeItem('currentUserEmail');window.location.href='login.html';}
+</script>
+</body>
+</html>
