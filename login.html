@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login - ForeignersLove</title>
+<style>
+body{margin:0;font-family:Arial;background:linear-gradient(135deg,#075e54,#128c7e);min-height:100vh;display:flex;align-items:center;justify-content:center}
+.box{background:white;width:90%;max-width:380px;padding:25px;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.2)}
+input{width:92%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:8px}
+.btn{width:100%;padding:12px;background:#075e54;color:white;border:none;border-radius:8px;font-weight:bold;margin-top:10px;cursor:pointer;font-size:16px}
+.tabs{display:flex;margin-bottom:15px}
+.tab{flex:1;padding:10px;text-align:center;cursor:pointer;border-bottom:2px solid #ddd}
+.tab.active{border-color:#075e54;color:#075e54;font-weight:bold}
+</style>
+</head>
+<body>
+<div class="box">
+<h2 style="text-align:center;color:#075e54;margin-top:0">ForeignersLove</h2>
+<div class="tabs"><div id="loginTab" class="tab active" onclick="showLogin()">Login</div><div id="regTab" class="tab" onclick="showReg()">Register</div></div>
+<div id="loginForm"><input id="lPhone" placeholder="Phone Number"><input id="lPass" type="password" placeholder="Password"><button class="btn" onclick="login()">Login</button><p id="lMsg" style="text-align:center;font-size:13px"></p></div>
+<div id="regForm" style="display:none"><input id="rName" placeholder="Full Name"><input id="rPhone" placeholder="Phone Number"><input id="rPass" type="password" placeholder="Create Password (min 4)"><button class="btn" onclick="register()">Create Account</button><p id="rMsg" style="text-align:center;font-size:13px"></p></div>
+</div>
+<script>
+function showLogin(){document.getElementById('loginForm').style.display='block';document.getElementById('regForm').style.display='none';document.getElementById('loginTab').classList.add('active');document.getElementById('regTab').classList.remove('active');}
+function showReg(){document.getElementById('loginForm').style.display='none';document.getElementById('regForm').style.display='block';document.getElementById('regTab').classList.add('active');document.getElementById('loginTab').classList.remove('active');}
+function register(){let n=document.getElementById('rName').value.trim();let p=document.getElementById('rPhone').value.trim();let pw=document.getElementById('rPass').value.trim();if(!n||!p||pw.length<4){document.getElementById('rMsg').innerHTML="<span style='color:red'>Fill all fields</span>";return;}if(localStorage.getItem('user_'+p)){document.getElementById('rMsg').innerHTML="<span style='color:red'>Phone already registered</span>";return;}let u={name:n,phone:p,pass:pw,created:Date.now()};localStorage.setItem('user_'+p,JSON.stringify(u));localStorage.setItem('currentUserEmail',p);localStorage.setItem('loginTime_'+p,Date.now());localStorage.setItem('balance_'+p,'0');document.getElementById('rMsg').innerHTML="<span style='color:green'>Success! Redirecting...</span>";setTimeout(()=>{window.location.href='index.html';},800);}
+function login(){let ph=document.getElementById('lPhone').value.trim();let pw=document.getElementById('lPass').value.trim();let us=localStorage.getItem('user_'+ph);if(!us){document.getElementById('lMsg').innerHTML="<span style='color:red'>User not found, register</span>";return;}let u=JSON.parse(us);if(u.pass!==pw){document.getElementById('lMsg').innerHTML="<span style='color:red'>Wrong password</span>";return;}localStorage.setItem('currentUserEmail',ph);if(!localStorage.getItem('loginTime_'+ph)){localStorage.setItem('loginTime_'+ph,Date.now());}document.getElementById('lMsg').innerHTML="<span style='color:green'>Login success!</span>";setTimeout(()=>{window.location.href='index.html';},600);}
+</script>
+</body>
+</html>
